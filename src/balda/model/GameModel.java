@@ -22,22 +22,23 @@ public class GameModel {
     private AbstractPlayer _activePlayer;
     private AbstractPlayer _otherPlayer;
     private GameMode _gameMode;
-    private DatabaseDictionary _dbDictionary;
+    private Database _database = new Database();
+    private UsedDictionary _used = new UsedDictionary();
     
     public GameModel(int width, int height, GameMode gameMode){
         generateField(width, height);
         _gameMode = gameMode;
         
-        _otherPlayer = new Player("Player 1", _field);
+        _otherPlayer = new Player("Player 1", _field, _database, _used);
         _otherPlayer.addPlayerActionListener(new PlayerObserve());
         if (_gameMode == GameMode.TWO_PLAYERS){
-            _activePlayer = new Player("Player 2", _field);
+            _activePlayer = new Player("Player 2", _field, _database, _used);
         } else{
             if (_gameMode == GameMode.EASY)
-                _activePlayer = new ComputerPlayer(3, _field);
+                _activePlayer = new ComputerPlayer(3, _field, _database, _used);
             else if (_gameMode == GameMode.NORMAL)
-                _activePlayer = new ComputerPlayer(4, _field);
-            else _activePlayer = new ComputerPlayer(5, _field);
+                _activePlayer = new ComputerPlayer(4, _field, _database, _used);
+            else _activePlayer = new ComputerPlayer(5, _field, _database, _used);
         }
         _activePlayer.addPlayerActionListener(new PlayerObserve());
     }
@@ -47,7 +48,6 @@ public class GameModel {
     }
     
     public void start(){
-        _dbDictionary = new DatabaseDictionary();
         String startingWord = "ABC";
         
         int l = startingWord.length();
@@ -84,29 +84,20 @@ public class GameModel {
         return _activePlayer;
     }
     
-    public void determineScore(){
-        String word = activePlayer().currentWord().word();
-        if (!_activePlayer.currentWord().contains(_activePlayer.currentCell()))
-            fireWordNotContainsCell(_activePlayer);
-        else
-        if (_activePlayer.dictionary().isInDictionary(word) || _otherPlayer.dictionary().isInDictionary(word))
-            fireUsedWord(_activePlayer);
-        else
-        if (!_dbDictionary.isInDictionary(word))
-            fireNonexistentWord(_activePlayer);
-        else{
-            _activePlayer.dictionary().addWord(word);
-
-            int score = word.length();
-            _activePlayer.addScore(score);
-            firePlayerScored(_activePlayer);
-            
-            String winner = determineWinner();
-            if (winner != null){
-                fireGameFinished(winner);
-            }
-            exchangePlayer();
+    public void clickOnCell(Point pos){
+        if (_activePlayer.isAddingLetter()){
+            _activePlayer.addLetter(pos);
+        } else{
+            _activePlayer.appendLetter(pos);
         }
+    }
+    
+    public void submittedWord(){
+        String winner = determineWinner();
+        if (winner != null){
+            fireGameFinished(winner);
+        }
+        exchangePlayer();        
     }
     
     private String determineWinner(){
@@ -143,6 +134,36 @@ public class GameModel {
                 fireLetterIsAppended(e);
             }
         }
+
+        @Override
+        public void wordNotContainsCell(PlayerActionEvent e) {
+            if (e.player() == activePlayer()){
+                fireWordNotContainsCell(e);
+            }
+        }
+
+        @Override
+        public void usedWord(PlayerActionEvent e) {
+            if (e.player() == activePlayer()){
+                fireUsedWord(e);
+            }
+        }
+
+        @Override
+        public void nonexistentWord(PlayerActionEvent e) {
+            if (e.player() == activePlayer()){
+                fireNonexistentWord(e);
+            }            
+        }
+
+        @Override
+        public void wordIsSubmitted(PlayerActionEvent e) {
+            if (e.player() == activePlayer()){
+                fireWordIsSubmitted(e);
+                submittedWord();
+            }
+            
+        }
     }
     
     //
@@ -174,6 +195,35 @@ public class GameModel {
             ((PlayerActionListener) listener).freeCellIsChoosen(e);
         }
     }
+    
+    protected void fireWordNotContainsCell(PlayerActionEvent e){
+        fLogger.info("GameModel: Player submitted word, which doesnt containt choosen word");    
+        for (Object listener : _playerListenerList){
+            ((PlayerActionListener) listener).wordNotContainsCell(e);
+        }        
+    }    
+
+    protected void fireUsedWord(PlayerActionEvent e){
+        fLogger.info("GameModel: Player submitted used-word");
+        for (Object listener : _playerListenerList){
+            ((PlayerActionListener) listener).usedWord(e);
+        }        
+    }    
+
+    protected void fireNonexistentWord(PlayerActionEvent e){
+        fLogger.info("GameModel: Player submitted nonexistent word");
+        for (Object listener : _playerListenerList){
+            ((PlayerActionListener) listener).nonexistentWord(e);
+        }        
+    }
+    
+    protected void fireWordIsSubmitted(PlayerActionEvent e){
+        fLogger.info("GameModel: Player submitted valid word");
+        for (Object listener : _playerListenerList){
+            ((PlayerActionListener) listener).wordIsSubmitted(e);
+        }        
+    }
+    
     
     
     // game listeners ----------------------------------
@@ -208,41 +258,5 @@ public class GameModel {
         for (Object listener : _listenerList){
             ((GameListener) listener).playerExchanged(e);
         }
-    }
-    
-    protected void firePlayerScored(AbstractPlayer player){
-        fLogger.info("GameModel: Player " + player.name() + " scored");                
-        GameEvent e = new GameEvent(this);
-        e.setPlayer(player);
-        for (Object listener : _listenerList){
-            ((GameListener) listener).playerScored(e);
-        }        
-    }
-    
-    protected void fireNonexistentWord(AbstractPlayer player){
-        fLogger.info("GameModel: Player submited nonexistent word");                
-        GameEvent e = new GameEvent(this);
-        e.setPlayer(player);
-        for (Object listener : _listenerList){
-            ((GameListener) listener).nonexistentWord(e);
-        }         
-    }
-    
-    protected void fireUsedWord(AbstractPlayer player){
-        fLogger.info("GameModel: Player submitted used word");                
-        GameEvent e = new GameEvent(this);
-        e.setPlayer(player);
-        for (Object listener : _listenerList){
-            ((GameListener) listener).usedWord(e);
-        }        
-    }
-    
-    protected void fireWordNotContainsCell(AbstractPlayer player){
-        fLogger.info("GameModel: Player submitted word, which doesn\'t contain choosen cell");                
-        GameEvent e = new GameEvent(this);
-        e.setPlayer(player);
-        for (Object listener : _listenerList){
-            ((GameListener) listener).wordNotContainsCell(e);
-        }        
-    }   
+    }    
 }
