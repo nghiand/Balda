@@ -17,16 +17,21 @@ import java.util.logging.Logger;
  */
 public abstract class AbstractPlayer {
     private int _score = 0;
-    private Dictionary _dictionary = new Dictionary();
+    private UsedDictionary _dictionary = new UsedDictionary();
     private boolean _addingLetter = true;
     private GameField _field;
     private Word _currentWord = new Word();
     private Cell _currentCell;
     private String _name;
+    private Database _database;
+    private UsedDictionary _used;
     
-    public AbstractPlayer(String name, GameField field){
+    public AbstractPlayer(String name, GameField field, 
+            Database database, UsedDictionary used){
         _name = name;
         _field = field;
+        _database = database;
+        _used = used;
     }
     
     public int getScore(){
@@ -41,17 +46,12 @@ public abstract class AbstractPlayer {
         return _name;
     }
     
-    public Dictionary dictionary(){
+    public UsedDictionary dictionary(){
         return _dictionary;
     }
     
-    public boolean isAddingLetter(Point pos){
-        if (_addingLetter && _field.isAvailable(pos)){
-            _currentCell = _field.cell(pos);
-            fireFreeCellIsChoosen(_currentCell);
-            return true;
-        }
-        return false;
+    public boolean isAddingLetter(){
+        return _addingLetter;
     }
     
     public void setAddingLetter(boolean flag){
@@ -86,6 +86,13 @@ public abstract class AbstractPlayer {
             
             _currentWord.addLetter(currentCell);
             fireLetterIsAppended(currentCell);
+        }
+    }
+    
+    public void addLetter(Point pos){
+        if (_addingLetter && _field.isAvailable(pos)){
+            _currentCell = _field.cell(pos);
+            fireFreeCellIsChoosen(_currentCell);            
         }
     }
     
