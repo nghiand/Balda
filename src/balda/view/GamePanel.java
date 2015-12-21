@@ -165,7 +165,7 @@ public class GamePanel extends JFrame{
         submit.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e){
-                _model.determineScore();
+                _model.activePlayer().submitWord();
             }
         });
         
@@ -412,9 +412,7 @@ public class GamePanel extends JFrame{
             
             Point p = buttonPosition(button);
             
-            if (_model.activePlayer().isAddingLetter(p)){
-            } else
-                _model.activePlayer().appendLetter(p);
+            _model.clickOnCell(p);
         }
     }
     
@@ -435,6 +433,26 @@ public class GamePanel extends JFrame{
             resetCellColor();
             _keyboard.setEnabled(true);
             changeCellColor(e.cell().position(), true);
+        }
+
+        @Override
+        public void wordNotContainsCell(PlayerActionEvent e) {
+            showMessage("Your word doesn't contains your choosen cell");            
+        }
+
+        @Override
+        public void usedWord(PlayerActionEvent e) {
+            showMessage("This word was used!");            
+        }
+
+        @Override
+        public void nonexistentWord(PlayerActionEvent e) {
+            showMessage("This word is not in our dictionary!");            
+        }
+
+        @Override
+        public void wordIsSubmitted(PlayerActionEvent e) {
+            updateScoreboard(e.player());            
         }
     }
     
@@ -462,26 +480,5 @@ public class GamePanel extends JFrame{
             String word = e.word();
             addStartingWord(word);
         }
-        
-        @Override
-        public void playerScored(GameEvent e){
-            updateScoreboard(e.player());
-        }
-        
-        @Override
-        public void usedWord(GameEvent e){
-            showMessage("This word was used!");
-        }
-        
-        @Override
-        public void nonexistentWord(GameEvent e){
-            showMessage("This word is not in our dictionary!");
-        }   
-        
-        @Override
-        public void wordNotContainsCell(GameEvent e){
-            showMessage("Your word doesn't contains your choosen cell");
-        }   
-      
     }
 }
