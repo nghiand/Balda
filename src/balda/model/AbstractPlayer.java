@@ -46,10 +46,6 @@ public abstract class AbstractPlayer {
         return _name;
     }
     
-    public UsedDictionary dictionary(){
-        return _dictionary;
-    }
-    
     public boolean isAddingLetter(){
         return _addingLetter;
     }
@@ -81,7 +77,7 @@ public abstract class AbstractPlayer {
         if (!_addingLetter){
             Cell currentCell = _field.cell(pos);
             if (currentCell.isAvailable()) return;
-            if (currentWord().isChoosen(currentCell)) return;
+            if (currentWord().contains(currentCell)) return;
             if (!currentWord().isAdjacent(currentCell)) return;
             
             _currentWord.addLetter(currentCell);
@@ -94,6 +90,25 @@ public abstract class AbstractPlayer {
             _currentCell = _field.cell(pos);
             fireFreeCellIsChoosen(_currentCell);            
         }
+    }
+    
+    public void submitWord(){
+        String word = _currentWord.word();
+        if (!_currentWord.contains(currentCell()))
+            fireWordNotContainsCell();
+        else
+        if (_used.isInDictionary(word))
+            fireUsedWord();
+        else
+        if (!_database.isInDictionary(word))
+            fireNonexistentWord();
+        else{
+            _used.addWord(word, this);
+
+            int score = word.length();
+            addScore(score);
+            firePlayerScored();
+        }        
     }
     
     public void clear(){
@@ -140,5 +155,41 @@ public abstract class AbstractPlayer {
             e.setPlayer(this);
             ((PlayerActionListener)listener).letterIsAppended(e);
         }            
+    }
+    
+    protected void fireWordNotContainsCell(){
+        fLogger.info("AbstractPlayer: Player submitted word, which doesnt containt choosen word");
+        for (Object listener : _playerListenerList){
+            PlayerActionEvent e = new PlayerActionEvent(this);
+            e.setPlayer(this);
+            ((PlayerActionListener)listener).wordNotContainsCell(e);
+        }                
+    }
+    
+    protected void fireUsedWord(){
+        fLogger.info("AbstractPlayer: Player submitted used-word");
+        for (Object listener : _playerListenerList){
+            PlayerActionEvent e = new PlayerActionEvent(this);
+            e.setPlayer(this);
+            ((PlayerActionListener)listener).usedWord(e);
+        }        
+    }
+    
+    protected void fireNonexistentWord(){
+        fLogger.info("AbstractPlayer: Player submitted nonexistent word");
+        for (Object listener : _playerListenerList){
+            PlayerActionEvent e = new PlayerActionEvent(this);
+            e.setPlayer(this);
+            ((PlayerActionListener)listener).nonexistentWord(e);
+        }                
+    }
+    
+    protected void firePlayerScored(){
+        fLogger.info("AbstractPlayer: Player submitted valid word");
+        for (Object listener : _playerListenerList){
+            PlayerActionEvent e = new PlayerActionEvent(this);
+            e.setPlayer(this);
+            ((PlayerActionListener)listener).scored(e);
+        }                        
     }
 }
