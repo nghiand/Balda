@@ -12,8 +12,9 @@ package balda.model;
 public class ComputerPlayer extends AbstractPlayer{
     private int _difficulty;
     
-    public ComputerPlayer(int difficulty, GameField field){
-        super("Computer", field);
+    public ComputerPlayer(int difficulty, GameField field, 
+            Database database, UsedDictionary used){
+        super("Computer", field, database, used);
         _difficulty = difficulty;
     }
     

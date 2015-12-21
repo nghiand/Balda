@@ -5,7 +5,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class UsedDictionary {
-    private Map<String, AbstractPlayer> _dictionary = new HashMap();
+    private Map<String, AbstractPlayer> _dictionary;
+    
+    public UsedDictionary(){
+        _dictionary = new HashMap();
+    }
     
     public void addWord(String word, AbstractPlayer player){
         _dictionary.put(word, player);
