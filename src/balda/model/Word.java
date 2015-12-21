@@ -28,14 +28,6 @@ public class Word {
         return good;
     }
     
-    public boolean isChoosen(Cell c){
-        for (Object cell: _listCells){
-            if (((Cell) cell).position() == c.position())
-                return true;
-        }        
-        return false;
-    }
-    
     public boolean contains(Cell c){
         for (Object cell : _listCells){
             if (((Cell) cell).equals(c)) return true;
