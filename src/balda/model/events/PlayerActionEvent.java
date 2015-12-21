@@ -26,4 +26,13 @@ public class PlayerActionEvent extends EventObject {
     public Cell cell(){
         return _cell;
     }
+    
+    String _word;
+    public void setWord(String word){
+        _word = word;
+    }
+    
+    public String word(){
+        return _word;
+    }
 }
