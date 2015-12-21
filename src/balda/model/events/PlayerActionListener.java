@@ -18,5 +18,5 @@ public interface PlayerActionListener extends EventListener{
     void wordNotContainsCell(PlayerActionEvent e);
     void usedWord(PlayerActionEvent e);
     void nonexistentWord(PlayerActionEvent e);
-    void scored(PlayerActionEvent e);
+    void wordIsSubmitted(PlayerActionEvent e);
 }
