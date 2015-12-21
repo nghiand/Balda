@@ -10,7 +10,8 @@ package balda.model;
  * @author Ngo Nghia
  */
 public class Player extends AbstractPlayer {
-    public Player(String name, GameField field){
-        super(name, field);
+    public Player(String name, GameField field, 
+            Database database, UsedDictionary used){
+        super(name, field, database, used);
     }
 }
