@@ -6,18 +6,40 @@
 package balda.model;
 
 import java.io.*;
+import java.util.ArrayList;
 
 /**
  *
  * @author Ngo Nghia
  */
-public class DatabaseDictionary extends Dictionary{
-    
+public class Database{
+    private ArrayList _dictionary = new ArrayList<String>();
     private String _filename = "dictionary/dictionary.txt";
+    private boolean _modified;
     
-    public DatabaseDictionary(){
+    public Database(){
         readFromFile();
+        _modified = false;
     }
+    
+    public void addWord(String word){
+        int pos = 0;
+        for (int i = 0; i < _dictionary.size(); i++){
+            if (((String)_dictionary.get(i)).compareTo(word) >= 0){
+                pos = i;
+                break;
+            }
+        }
+        _dictionary.add(pos, word);  
+        _modified = true;
+    }
+    
+    public boolean isInDictionary(String word){
+        for (Object obj : _dictionary){
+            if (((String) obj).compareTo(word) == 0) return true;
+        }
+        return false;
+    }    
     
     private void readFromFile(){
         try{
