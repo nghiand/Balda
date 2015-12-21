@@ -107,7 +107,7 @@ public abstract class AbstractPlayer {
 
             int score = word.length();
             addScore(score);
-            firePlayerScored();
+            fireWordIsSubmitted();
         }        
     }
     
@@ -184,12 +184,12 @@ public abstract class AbstractPlayer {
         }                
     }
     
-    protected void firePlayerScored(){
+    protected void fireWordIsSubmitted(){
         fLogger.info("AbstractPlayer: Player submitted valid word");
         for (Object listener : _playerListenerList){
             PlayerActionEvent e = new PlayerActionEvent(this);
             e.setPlayer(this);
-            ((PlayerActionListener)listener).scored(e);
+            ((PlayerActionListener)listener).wordIsSubmitted(e);
         }                        
     }
 }
