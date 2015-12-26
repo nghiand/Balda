@@ -60,6 +60,11 @@ public class GameModel {
         
         fireStartingWordIsChoosen(startingWord);
         exchangePlayer();
+        
+        if (_activePlayer instanceof ComputerPlayer){
+            ((ComputerPlayer)_activePlayer).move();
+            exchangePlayer();
+        }
     }
     
     public void exchangePlayer(){
