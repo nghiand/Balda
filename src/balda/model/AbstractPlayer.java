@@ -17,14 +17,14 @@ import java.util.logging.Logger;
  */
 public abstract class AbstractPlayer {
     private int _score = 0;
-    private UsedDictionary _dictionary = new UsedDictionary();
-    private boolean _addingLetter = true;
-    private GameField _field;
-    private Word _currentWord = new Word();
-    private Cell _currentCell;
-    private String _name;
-    private Database _database;
-    private UsedDictionary _used;
+    protected UsedDictionary _dictionary = new UsedDictionary();
+    protected boolean _addingLetter = true;
+    protected GameField _field;
+    protected Word _currentWord = new Word();
+    protected Cell _currentCell;
+    protected String _name;
+    protected Database _database;
+    protected UsedDictionary _used;
     
     public AbstractPlayer(String name, GameField field, 
             Database database, UsedDictionary used){
@@ -67,10 +67,12 @@ public abstract class AbstractPlayer {
     }
     
     public void setLetter(char letter){
-        _currentCell.setLetter(letter);
-        setAddingLetter(false);
-        _currentWord.clear();
-        fireLetterIsPlaced(_currentCell);
+        if (_currentCell != null){
+            _currentCell.setLetter(letter);
+            setAddingLetter(false);
+            _currentWord.clear();
+            fireLetterIsPlaced(_currentCell);
+        }
     }
     
     public void appendLetter(Point pos){
@@ -109,6 +111,10 @@ public abstract class AbstractPlayer {
             addScore(score);
             fireWordIsSubmitted();
         }        
+    }
+    
+    public void skipTurn(){
+        fireSkipedTurn();
     }
     
     public void clear(){
@@ -192,4 +198,13 @@ public abstract class AbstractPlayer {
             ((PlayerActionListener)listener).wordIsSubmitted(e);
         }                        
     }
+    
+    protected void fireSkipedTurn(){
+        fLogger.info("AbstractPlayer: Player skiped turn");
+        for (Object listener : _playerListenerList){
+            PlayerActionEvent e = new PlayerActionEvent(this);
+            e.setPlayer(this);
+            ((PlayerActionListener)listener).skipedTurn(e);
+        }                        
+    }    
 }
