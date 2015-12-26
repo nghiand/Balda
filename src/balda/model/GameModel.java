@@ -59,12 +59,7 @@ public class GameModel {
         }
         
         fireStartingWordIsChoosen(startingWord);
-        exchangePlayer();
-        
-        if (_activePlayer instanceof ComputerPlayer){
-            ((ComputerPlayer)_activePlayer).move();
-            exchangePlayer();
-        }
+        exchangePlayer();        
     }
     
     public void exchangePlayer(){
@@ -102,7 +97,11 @@ public class GameModel {
         if (winner != null){
             fireGameFinished(winner);
         }
-        exchangePlayer();        
+        exchangePlayer();
+        if (_activePlayer instanceof ComputerPlayer){
+            ((ComputerPlayer)_activePlayer).move();
+            exchangePlayer();
+        }        
     }
     
     private String determineWinner(){
