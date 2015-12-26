@@ -111,6 +111,11 @@ public class GameModel {
         return null;
     }
     
+    public void addWordToDictionary(){
+        String word = _activePlayer.currentWord().word();
+        _database.addWord(word);
+    }
+    
     //----------------------------------------------------------
     
     private class PlayerObserve implements PlayerActionListener{

@@ -160,6 +160,12 @@ public class GamePanel extends JFrame{
             }
         });
         JButton addWord = new JButton("Add to dictionary");
+        addWord.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e){
+                _model.addWordToDictionary();
+            }
+        });
         
         JButton submit = new JButton("Submit");
         submit.addActionListener(new ActionListener(){
