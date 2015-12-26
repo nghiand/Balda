@@ -2,6 +2,7 @@ package balda.view;
 
 import balda.model.AbstractPlayer;
 import balda.model.Cell;
+import balda.model.ComputerPlayer;
 import balda.model.GameMode;
 import balda.model.GameModel;
 import balda.model.events.GameEvent;
@@ -140,7 +141,10 @@ public class GamePanel extends JFrame{
         scores[0].setText("0");
         firstPlayerScore.add(scores[0]);
         JPanel secondPlayerScore = new JPanel();
-        secondPlayerScore.add(new JLabel("Player 2: "));
+        if (_gameMode == GameMode.TWO_PLAYERS)
+            secondPlayerScore.add(new JLabel("Player 2: "));
+        else
+            secondPlayerScore.add(new JLabel("Computer: "));
         scores[1].setText("0");
         secondPlayerScore.add(scores[1]);
         
@@ -156,7 +160,7 @@ public class GamePanel extends JFrame{
         skip.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e){
-                _model.exchangePlayer();
+                _model.activePlayer().skipTurn();
             }
         });
         JButton addWord = new JButton("Add to dictionary");
@@ -405,8 +409,10 @@ public class GamePanel extends JFrame{
         @Override
         public void keyIsPressed(KeyboardEvent e){
             //System.out.println(e.getKey());
-            _model.activePlayer().setLetter(e.getKey().charAt(0));
-            _keyboard.setEnabled(false);
+            if (!(_model.activePlayer() instanceof ComputerPlayer)){
+                _model.activePlayer().setLetter(e.getKey().charAt(0));
+                _keyboard.setEnabled(false);
+            }
         }
     }
     
@@ -418,7 +424,8 @@ public class GamePanel extends JFrame{
             
             Point p = buttonPosition(button);
             
-            _model.clickOnCell(p);
+            if (!(_model.activePlayer() instanceof ComputerPlayer))
+                _model.clickOnCell(p);
         }
     }
     
@@ -458,7 +465,13 @@ public class GamePanel extends JFrame{
 
         @Override
         public void wordIsSubmitted(PlayerActionEvent e) {
-            updateScoreboard(e.player());            
+            updateScoreboard(e.player());
+            _keyboard.setEnabled(false);
+        }
+        
+        @Override
+        public void skipedTurn(PlayerActionEvent e){
+            
         }
     }
     
@@ -472,6 +485,7 @@ public class GamePanel extends JFrame{
                 
                 setEnabledField(false);
                 setEnabledMenuFunctions(false);
+                _keyboard.setEnabled(false);
             }
         }
         
