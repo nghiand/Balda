@@ -11,6 +11,7 @@ import balda.model.events.PlayerActionEvent;
 import balda.model.events.PlayerActionListener;
 import java.awt.Point;
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.logging.Logger;
 /**
  *
@@ -37,8 +38,8 @@ public class GameModel {
             if (_gameMode == GameMode.EASY)
                 _activePlayer = new ComputerPlayer(3, _field, _database, _used);
             else if (_gameMode == GameMode.NORMAL)
-                _activePlayer = new ComputerPlayer(4, _field, _database, _used);
-            else _activePlayer = new ComputerPlayer(5, _field, _database, _used);
+                _activePlayer = new ComputerPlayer(5, _field, _database, _used);
+            else _activePlayer = new ComputerPlayer(9, _field, _database, _used);
         }
         _activePlayer.addPlayerActionListener(new PlayerObserve());
     }
@@ -47,8 +48,20 @@ public class GameModel {
         return _field;
     }
     
+    private String startingWord(){
+        Random rd = new Random();
+        int pos = rd.nextInt();
+        pos = Math.abs(pos);
+        String ret = _database.getWord(pos);
+        return ret;
+    }
+    
     public void start(){
-        String startingWord = "ABC";
+        String startingWord = startingWord();
+        
+        if (startingWord.length() > field().width()){
+            startingWord = startingWord.substring(0, field().width());
+        }
         
         int l = startingWord.length();
         int row = (field().height() + 1) / 2;
@@ -68,6 +81,11 @@ public class GameModel {
         _otherPlayer = temp;
         _activePlayer.clear();
         firePlayerExchanged(_activePlayer);
+        
+        if (_activePlayer instanceof ComputerPlayer){
+            ((ComputerPlayer)_activePlayer).move();
+            //exchangePlayer();
+        }        
     }
     
     private void generateField(int width, int height){
@@ -98,10 +116,6 @@ public class GameModel {
             fireGameFinished(winner);
         }
         exchangePlayer();
-        if (_activePlayer instanceof ComputerPlayer){
-            ((ComputerPlayer)_activePlayer).move();
-            exchangePlayer();
-        }        
     }
     
     private String determineWinner(){
@@ -170,8 +184,15 @@ public class GameModel {
             if (e.player() == activePlayer()){
                 fireWordIsSubmitted(e);
                 submittedWord();
+            }   
+        }
+        
+        @Override
+        public void skipedTurn(PlayerActionEvent e){
+            if (e.player() == activePlayer()){
+                exchangePlayer();
+                fireSkipedTurn(e);
             }
-            
         }
     }
     
@@ -233,7 +254,12 @@ public class GameModel {
         }        
     }
     
-    
+    protected void fireSkipedTurn(PlayerActionEvent e){
+        fLogger.info("GameModel: Player skiped turn");
+        for (Object listener : _playerListenerList){
+            ((PlayerActionListener) listener).skipedTurn(e);
+        }
+    }
     
     // game listeners ----------------------------------
     private ArrayList _listenerList = new ArrayList();
