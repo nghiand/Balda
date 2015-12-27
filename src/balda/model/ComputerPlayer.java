@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package balda.model;
 
 import balda.model.events.PlayerActionEvent;
@@ -13,20 +8,29 @@ import java.util.ArrayList;
 import javax.swing.Timer;
 
 /**
- *
- * @author Ngo Nghia
+ * Class for description computer player
  */
 public class ComputerPlayer extends AbstractPlayer{
     private int _difficulty;
     private Word bestWord = new Word();
     private char bestLetter;
     
+    /**
+     * Constructor
+     * @param difficulty Difficulty of AI
+     * @param field Game field
+     * @param database Database dictionary
+     * @param used Common dictionary, in which used words
+     */
     public ComputerPlayer(int difficulty, GameField field, 
             Database database, UsedDictionary used){
         super("Computer", field, database, used);
         _difficulty = difficulty;
     }
     
+    /**
+     * Find best word to submit
+     */
     public void move(){
         bestWord.clear();
         for (int row = 1; row <= _field.height(); row++){
@@ -111,6 +115,11 @@ public class ComputerPlayer extends AbstractPlayer{
         }        
     }
     
+    /**
+     * Try to set letter to cell c
+     * @param letter Letter
+     * @param c Cell
+     */
     private void tryLetter(char letter, Cell c){
         Word ret = new Word();
         ArrayList<Cell> listCells = new ArrayList<Cell>();
@@ -118,6 +127,12 @@ public class ComputerPlayer extends AbstractPlayer{
         findWord(0, c, listCells, letter);
     }
     
+    /**
+     * Get String word from array of chosen cells
+     * @param listCells Array of chosen cells
+     * @param lastLetter Letter, which was set to last cell
+     * @return Word
+     */
     private String toString(ArrayList<Cell> listCells, char lastLetter){
         String ret = "";
         for (int i = 1; i < listCells.size(); i++){
@@ -127,6 +142,11 @@ public class ComputerPlayer extends AbstractPlayer{
         return ret;
     }
     
+    /**
+     * Update best word after finding new word
+     * @param listCells Array of chosen cells
+     * @param lastLetter Letter, which was set to last cell
+     */
     private void updateBestWord(ArrayList<Cell> listCells, char lastLetter){
         Word currentWord = new Word();
         for (int i = listCells.size() - 1; i >= 0; i--){
@@ -138,6 +158,13 @@ public class ComputerPlayer extends AbstractPlayer{
         }
     }
     
+    /**
+     * Try to find new word
+     * @param length Length of current word
+     * @param currentCell Last chosen cell
+     * @param listCells Array of chosen cells
+     * @param lastLetter Letter, which was set to last cell
+     */
     private void findWord(int length, Cell currentCell, ArrayList<Cell> listCells, char lastLetter){
         String word = toString(listCells, lastLetter);
         if (!_used.isInDictionary(word) && _database.isInDictionary(word)){
