@@ -57,9 +57,8 @@ public class GameField {
         }
         return good;
     }
-    
-    
-    private boolean inRange(Point pos){
+        
+    boolean inRange(Point pos){
         return 1 <= pos.x && pos.x <= _height && 1 <= pos.y && pos.y <= _width;
     }
     
