@@ -80,4 +80,9 @@ public class Database{
             }
         }
     }
+    
+    String getWord(int pos){
+        pos = pos % _dictionary.size(); 
+        return (String) _dictionary.get(pos);
+    }
 }
