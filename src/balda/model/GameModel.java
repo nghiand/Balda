@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package balda.model;
 import balda.model.GameMode;
 import balda.model.events.GameEvent;
@@ -13,9 +8,9 @@ import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.logging.Logger;
+
 /**
- *
- * @author Ngo Nghia
+ * Game model, controls game
  */
 public class GameModel {
     
@@ -26,6 +21,12 @@ public class GameModel {
     private Database _database = new Database();
     private UsedDictionary _used = new UsedDictionary();
     
+    /**
+     * Constructor
+     * @param width width of game field
+     * @param height height of game field
+     * @param gameMode game mode
+     */
     public GameModel(int width, int height, GameMode gameMode){
         generateField(width, height);
         _gameMode = gameMode;
@@ -44,10 +45,18 @@ public class GameModel {
         _activePlayer.addPlayerActionListener(new PlayerObserve());
     }
     
+    /**
+     * Get game field
+     * @return 
+     */
     public GameField field(){
         return _field;
     }
     
+    /**
+     * Choose a starting word
+     * @return starting word
+     */
     private String startingWord(){
         Random rd = new Random();
         int pos = rd.nextInt();
@@ -56,6 +65,9 @@ public class GameModel {
         return ret;
     }
     
+    /**
+     * Start game
+     */
     public void start(){
         String startingWord = startingWord();
         
@@ -75,6 +87,9 @@ public class GameModel {
         exchangePlayer();        
     }
     
+    /**
+     * Exchange player
+     */
     public void exchangePlayer(){
         AbstractPlayer temp = _activePlayer;
         _activePlayer = _otherPlayer;
@@ -88,6 +103,11 @@ public class GameModel {
         }        
     }
     
+    /**
+     * Generate game field
+     * @param width width of game field
+     * @param height height of game field
+     */
     private void generateField(int width, int height){
         field().clear();
         field().setSize(width, height);
@@ -98,10 +118,18 @@ public class GameModel {
         }
     }
     
+    /**
+     * Get active player
+     * @return active player
+     */
     public AbstractPlayer activePlayer(){
         return _activePlayer;
     }
     
+    /**
+     * Player click on a cell
+     * @param pos position of cell
+     */
     public void clickOnCell(Point pos){
         if (_activePlayer.isAddingLetter()){
             _activePlayer.addLetter(pos);
@@ -110,6 +138,9 @@ public class GameModel {
         }
     }
     
+    /**
+     * Player submitted word
+     */
     public void submittedWord(){
         String winner = determineWinner();
         if (winner != null){
@@ -118,6 +149,10 @@ public class GameModel {
         exchangePlayer();
     }
     
+    /**
+     * Determine winner
+     * @return name of winner
+     */
     private String determineWinner(){
         if (field().isFull()){
             if (_activePlayer.getScore() > _otherPlayer.getScore())
@@ -129,6 +164,9 @@ public class GameModel {
         return null;
     }
     
+    /**
+     * Player added word to database dictionary
+     */
     public void addWordToDictionary(){
         String word = _activePlayer.currentWord().word();
         _database.addWord(word);
