@@ -1,27 +1,28 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package balda.model;
 
 import java.io.*;
 import java.util.ArrayList;
 
 /**
- *
- * @author Ngo Nghia
+ * Database dictionary
  */
 public class Database{
     private ArrayList _dictionary = new ArrayList<String>();
     private String _filename = "dictionary/dictionary.txt";
     private boolean _modified;
     
+    /**
+     * Constructor
+     */
     public Database(){
         readFromFile();
         _modified = false;
     }
     
+    /**
+     * Add new word to dictionary
+     * @param word Word
+     */
     public void addWord(String word){
         int pos = 0;
         for (int i = 0; i < _dictionary.size(); i++){
@@ -34,6 +35,11 @@ public class Database{
         _modified = true;
     }
     
+    /**
+     * Check if a word is in database dictionary
+     * @param word Word
+     * @return true if word is in database
+     */
     public boolean isInDictionary(String word){
         for (Object obj : _dictionary){
             if (((String) obj).compareTo(word) == 0) return true;
@@ -41,6 +47,9 @@ public class Database{
         return false;
     }    
     
+    /**
+     * Read database from file when game starts
+     */
     private void readFromFile(){
         try{
             FileReader fileReader = new FileReader(_filename);
@@ -61,6 +70,9 @@ public class Database{
         }           
     }
     
+    /**
+     * Save database when there was any change
+     */
     public void writeToFile(){
         if (_modified){
             try {
@@ -81,6 +93,11 @@ public class Database{
         }
     }
     
+    /**
+     * Get word with position in database
+     * @param pos Position
+     * @return Word
+     */
     String getWord(int pos){
         pos = pos % _dictionary.size(); 
         return (String) _dictionary.get(pos);
