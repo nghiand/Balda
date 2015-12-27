@@ -3,31 +3,60 @@ package balda.model;
 import java.awt.Point;
 import java.util.ArrayList;
 
+/**
+ * Game Field
+ */
 public class GameField {
     private int _width;
     private int _height;
     
     private ArrayList<Cell> _listCells = new ArrayList<>();
     
+    /**
+     * Default constructor
+     */
     public GameField(){}
     
+    /**
+     * Constructor with size
+     * @param width Width
+     * @param height Height
+     */
     public GameField(int width, int height){
         setSize(width, height);
     }
     
+    /**
+     * Set size for game field
+     * @param width Width
+     * @param height Height
+     */
     public void setSize(int width, int height){
         _width = width;
         _height = height;
     }
     
+    /**
+     * Get width of game field
+     * @return width
+     */
     public int width(){
         return _width;
     }
     
+    /**
+     * Get height of game field
+     * @return height
+     */
     public int height(){
         return _height;
     }
     
+    /**
+     * Get cell in position
+     * @param pos Position
+     * @return cell
+     */
     public Cell cell(Point pos){
         for (Cell c: _listCells){
             if (c.position().equals(pos)) return c;
@@ -35,15 +64,28 @@ public class GameField {
         return null;
     }
     
+    /**
+     * Set cell to position
+     * @param pos Position
+     * @param cell Cell
+     */
     void setCell(Point pos, Cell cell){
         cell.setPosition(pos);
         _listCells.add(cell);
     }
     
+    /**
+     * Delete list cells
+     */
     public void clear(){
         _listCells.clear();
     }
     
+    /**
+     * Check that can add a letter to cell in position
+     * @param pos Position
+     * @return true if can add a letter to cell
+     */
     public boolean isAvailable(Point pos){
         Cell c = cell(pos);
         if (!c.isAvailable()) return false;
@@ -57,11 +99,20 @@ public class GameField {
         }
         return good;
     }
-        
+    
+    /**
+     * Check if a position in game field
+     * @param pos position
+     * @return 
+     */
     boolean inRange(Point pos){
         return 1 <= pos.x && pos.x <= _height && 1 <= pos.y && pos.y <= _width;
     }
     
+    /**
+     * Check if all cells were filled
+     * @return 
+     */
     public boolean isFull(){
         int ret = 0;
         for (Cell c : _listCells){
