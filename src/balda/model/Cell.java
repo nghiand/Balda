@@ -38,4 +38,10 @@ public class Cell {
     public boolean isAvailable(){
         return !('A' <= _letter && _letter <= 'Z');
     }
+    
+    @Override
+    public boolean equals(Object other){
+        Cell _other = (Cell) other;
+        return position().equals(_other.position());
+    }
 }
