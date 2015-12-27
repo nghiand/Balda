@@ -7,7 +7,7 @@ public class Word {
     ArrayList _listCells = new ArrayList<>();
     
     public Word(){
-        
+        _word = "";
     }
     
     public int getScore(){
@@ -47,5 +47,10 @@ public class Word {
     
     public String word(){
         return _word;
+    }
+    
+    Cell getCell(int i){
+        if (i >= _listCells.size()) return null;
+        return (Cell)_listCells.get(i);
     }
 }
