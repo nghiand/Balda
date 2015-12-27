@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package balda.model;
 
 import balda.model.events.PlayerActionEvent;
@@ -12,8 +7,8 @@ import java.util.ArrayList;
 import java.util.logging.Logger;
 
 /**
- *
- * @author Ngo Nghia
+ * Abstract class for description players
+ * 
  */
 public abstract class AbstractPlayer {
     private int _score = 0;
@@ -26,6 +21,13 @@ public abstract class AbstractPlayer {
     protected Database _database;
     protected UsedDictionary _used;
     
+    /**
+     * Constructor
+     * @param name Player's name
+     * @param field Gamefield
+     * @param database Database dictionary
+     * @param used Common dictionary, which stores used words
+     */
     public AbstractPlayer(String name, GameField field, 
             Database database, UsedDictionary used){
         _name = name;
@@ -34,38 +36,74 @@ public abstract class AbstractPlayer {
         _used = used;
     }
     
+    /**
+     * Get player's score
+     * @return score
+     */
     public int getScore(){
         return _score;
     }
     
+    /**
+     * Add player's score
+     * @param score score
+     */
     public void addScore(int score){
         _score += score;
     }
     
+    /**
+     * Get player's name
+     * @return players name
+     */
     public String name(){
         return _name;
     }
     
+    /**
+     * Is player adding letter
+     * @return true if player is adding letter
+     */
     public boolean isAddingLetter(){
         return _addingLetter;
     }
     
+    /**
+     * Set adding letter flag
+     * @param flag is adding letter
+     */
     public void setAddingLetter(boolean flag){
         _addingLetter = flag;
     }
     
+    /**
+     * Set last cell, which was chosen by player while specifying word
+     * @param c last cell
+     */
     public void setCurrentCell(Cell c){
         _currentCell = c;
     }
     
+    /**
+     * Get last cell, which was chosen by player while specifying word
+     * @return last cell
+     */
     public Cell currentCell(){
         return _currentCell;
     }
     
+    /**
+     * Get chosen word
+     * @return chosen word
+     */
     public Word currentWord(){
         return _currentWord;
     }
     
+    /**
+     * Set letter to chosen cell
+     * @param letter letter
+     */
     public void setLetter(char letter){
         if (_currentCell != null){
             _currentCell.setLetter(letter);
@@ -75,6 +113,10 @@ public abstract class AbstractPlayer {
         }
     }
     
+    /**
+     * Append letter, which is in position pos, to chosen word
+     * @param pos position
+     */
     public void appendLetter(Point pos){
         if (!_addingLetter){
             Cell currentCell = _field.cell(pos);
@@ -87,6 +129,10 @@ public abstract class AbstractPlayer {
         }
     }
     
+    /**
+     * Choose cell in position pos
+     * @param pos position
+     */
     public void addLetter(Point pos){
         if (_addingLetter && _field.isAvailable(pos)){
             _currentCell = _field.cell(pos);
@@ -94,6 +140,9 @@ public abstract class AbstractPlayer {
         }
     }
     
+    /**
+     * Submit chosen word to get score
+     */
     public void submitWord(){
         String word = _currentWord.word();
         if (!_currentWord.contains(currentCell()))
@@ -113,10 +162,16 @@ public abstract class AbstractPlayer {
         }        
     }
     
+    /**
+     * Skip turn
+     */
     public void skipTurn(){
         fireSkipedTurn();
     }
     
+    /**
+     * Clear chosen word and cell after submitting word
+     */
     public void clear(){
         _currentWord.clear();
         _currentCell = null;
