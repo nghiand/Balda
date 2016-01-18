@@ -9,12 +9,11 @@ package balda.model;
  *
  * @author Ngo Nghia
  */
-public abstract class AiMode {
-    protected int _difficulty;
-    protected String _name;
+public class AiEasy extends AiMode{
+    private static final String _name = "Easy";
+    private static final int _difficulty = 3;
     
-    public AiMode(String name, int difficulty){
-        _name = name;
-        _difficulty = difficulty;
+    public AiEasy(){
+        super(_name, _difficulty);
     }
 }
