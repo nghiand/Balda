@@ -1,4 +1,5 @@
 package balda.model;
+import balda.factory.AiModeFactory;
 import balda.model.GameMode;
 import balda.model.events.GameEvent;
 import balda.model.events.GameListener;
@@ -36,11 +37,16 @@ public class GameModel {
         if (_gameMode == GameMode.TWO_PLAYERS){
             _activePlayer = new Player("Player 2", _field, _database, _used);
         } else{
+            AiMode mode;
+            AiModeFactory _aiModeFactory = new AiModeFactory();
             if (_gameMode == GameMode.EASY)
-                _activePlayer = new ComputerPlayer(3, _field, _database, _used);
+                mode = _aiModeFactory.createAiEasyMode();
             else if (_gameMode == GameMode.NORMAL)
-                _activePlayer = new ComputerPlayer(5, _field, _database, _used);
-            else _activePlayer = new ComputerPlayer(9, _field, _database, _used);
+                mode = _aiModeFactory.createAiNormalMode();
+            else
+                mode = _aiModeFactory.createAiHardMode();
+            
+            _activePlayer = new ComputerPlayer(mode, _field, _database, _used);
         }
         _activePlayer.addPlayerActionListener(new PlayerObserve());
     }

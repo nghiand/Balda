@@ -14,7 +14,7 @@ import balda.model.AiNormalMode;
  * @author Ngo Nghia
  */
 public class AiModeFactory {
-    public AiEasyMode createAiEasy(){
+    public AiEasyMode createAiEasyMode(){
         return new AiEasyMode();
     }
     

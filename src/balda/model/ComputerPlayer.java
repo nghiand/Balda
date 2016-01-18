@@ -14,6 +14,7 @@ public class ComputerPlayer extends AbstractPlayer{
     private int _difficulty;
     private Word bestWord = new Word();
     private char bestLetter;
+    private AiMode _mode;
     
     /**
      * Constructor
@@ -22,10 +23,10 @@ public class ComputerPlayer extends AbstractPlayer{
      * @param database Database dictionary
      * @param used Common dictionary, in which used words
      */
-    public ComputerPlayer(int difficulty, GameField field, 
+    public ComputerPlayer(AiMode mode, GameField field, 
             Database database, UsedDictionary used){
         super("Computer", field, database, used);
-        _difficulty = difficulty;
+        _difficulty = mode.difficulty();
     }
     
     /**
