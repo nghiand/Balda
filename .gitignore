@@ -61,3 +61,9 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
+*.html
+dist/javadoc/package-list
+*.js
+dist/javadoc/stylesheet.css
+*.xml
+nbproject/private/private.xml

@@ -160,14 +160,16 @@ public class GamePanel extends JFrame{
         skip.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e){
-                _model.activePlayer().skipTurn();
+                if (!(_model.activePlayer() instanceof ComputerPlayer))
+                    _model.activePlayer().skipTurn();
             }
         });
         JButton addWord = new JButton("Add to dictionary");
         addWord.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e){
-                _model.addWordToDictionary();
+                if (!(_model.activePlayer() instanceof ComputerPlayer))
+                    _model.addWordToDictionary();
             }
         });
         
@@ -175,7 +177,8 @@ public class GamePanel extends JFrame{
         submit.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e){
-                _model.activePlayer().submitWord();
+                if (!(_model.activePlayer() instanceof ComputerPlayer))
+                    _model.activePlayer().submitWord();
             }
         });
         
@@ -183,8 +186,10 @@ public class GamePanel extends JFrame{
         cancel.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e){
-                _model.activePlayer().currentWord().clear();
-                resetCellColor();
+                if (!(_model.activePlayer() instanceof ComputerPlayer)){
+                    _model.activePlayer().currentWord().clear();
+                    resetCellColor();
+                }
             }
         });
         
