@@ -135,18 +135,6 @@ public class GameModel {
     }
     
     /**
-     * Player click on a cell
-     * @param pos position of cell
-     */
-    public void clickOnCell(Point pos){
-        if (_activePlayer.isAddingLetter()){
-            _activePlayer.addLetter(pos);
-        } else{
-            _activePlayer.appendLetter(pos);
-        }
-    }
-    
-    /**
      * Player submitted word
      */
     public void submittedWord(){

@@ -442,7 +442,7 @@ public class GamePanel extends JFrame{
             Point p = buttonPosition(button);
             
             if (!(_model.activePlayer() instanceof ComputerPlayer))
-                _model.clickOnCell(p);
+                _model.activePlayer().clickOnCell(p);
         }
     }
     

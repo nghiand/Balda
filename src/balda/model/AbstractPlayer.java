@@ -170,6 +170,18 @@ public abstract class AbstractPlayer {
     }
     
     /**
+     * Player click on a cell
+     * @param pos position of cell
+     */    
+    public void clickOnCell(Point pos){
+        if (this.isAddingLetter()){
+            this.addLetter(pos);
+        } else{
+            this.appendLetter(pos);
+        }        
+    }
+    
+    /**
      * Clear chosen word and cell after submitting word
      */
     public void clear(){
