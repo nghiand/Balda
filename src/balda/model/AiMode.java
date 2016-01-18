@@ -17,4 +17,12 @@ public abstract class AiMode {
         _name = name;
         _difficulty = difficulty;
     }
+    
+    public int difficulty(){
+        return _difficulty;
+    }
+    
+    public String name(){
+        return _name;
+    }
 }
