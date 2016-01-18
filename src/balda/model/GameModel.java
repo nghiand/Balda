@@ -43,8 +43,10 @@ public class GameModel {
                 mode = _aiModeFactory.createAiEasyMode();
             else if (_gameMode == GameMode.NORMAL)
                 mode = _aiModeFactory.createAiNormalMode();
-            else
+            else if (_gameMode == GameMode.HARD)
                 mode = _aiModeFactory.createAiHardMode();
+            else
+                mode = _aiModeFactory.createAiEasyMode();
             
             _activePlayer = new ComputerPlayer(mode, _field, _database, _used);
         }

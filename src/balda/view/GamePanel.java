@@ -1,6 +1,9 @@
 package balda.view;
 
 import balda.model.AbstractPlayer;
+import balda.model.AiEasyMode;
+import balda.model.AiHardMode;
+import balda.model.AiNormalMode;
 import balda.model.Cell;
 import balda.model.ComputerPlayer;
 import balda.model.GameMode;
@@ -18,6 +21,8 @@ import java.awt.GridLayout;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.*;
 
 public class GamePanel extends JFrame{
@@ -257,7 +262,14 @@ public class GamePanel extends JFrame{
         gameMode.add(new JLabel("Game mode"));
         
         // ai mode
-        String aiModeString[] = {"Easy", "Normal", "Hard"};
+        ArrayList<String> aiModeName = new ArrayList<String>();
+        aiModeName.add(AiEasyMode._name);
+        aiModeName.add(AiNormalMode._name);
+        aiModeName.add(AiHardMode._name);
+        
+        String aiModeString[] = aiModeName.toArray(new String[aiModeName.size()]);
+        //String aiModeString[] = {"Easy", "Normal", "Hard"};
+        
         JComboBox aiModeList = new JComboBox(aiModeString);
         aiModeList.setSelectedIndex(0);
         aiModeList.setEnabled(false);

@@ -10,7 +10,7 @@ package balda.model;
  * @author Ngo Nghia
  */
 public class AiEasyMode extends AiMode{
-    private static final String _name = "Easy";
+    public static final String _name = "Easy";
     private static final int _difficulty = 3;
     
     public AiEasyMode(){

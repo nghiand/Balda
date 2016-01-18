@@ -11,7 +11,7 @@ package balda.model;
  */
 public abstract class AiMode {
     protected int _difficulty;
-    protected String _name;
+    public static String _name;
     
     public AiMode(String name, int difficulty){
         _name = name;
@@ -22,7 +22,7 @@ public abstract class AiMode {
         return _difficulty;
     }
     
-    public String name(){
+    public static String name(){
         return _name;
     }
 }
