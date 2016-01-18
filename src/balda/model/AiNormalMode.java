@@ -9,11 +9,11 @@ package balda.model;
  *
  * @author Ngo Nghia
  */
-public class AiNormal extends AiMode {
+public class AiNormalMode extends AiMode {
     private static final String _name = "Normal";
     private static final int _difficulty = 4;
     
-    public AiNormal(){
+    public AiNormalMode(){
         super(_name, _difficulty);
     }    
 }
