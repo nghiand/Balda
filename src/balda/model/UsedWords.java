@@ -7,13 +7,13 @@ import java.util.Map;
 /**
  * Common dictionary, in which used words
  */
-public class UsedDictionary {
+public class UsedWords {
     private Map<String, AbstractPlayer> _dictionary;
     
     /**
      * Constructor
      */
-    public UsedDictionary(){
+    public UsedWords(){
         _dictionary = new HashMap();
     }
     

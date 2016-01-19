@@ -12,7 +12,7 @@ public class Player extends AbstractPlayer {
      * @param used common dictionary, in which used words
      */
     public Player(String name, GameField field, 
-            Database database, UsedDictionary used){
+            Dictionary database, UsedWords used){
         super(name, field, database, used);
     }
 }

@@ -4,9 +4,9 @@ import java.io.*;
 import java.util.ArrayList;
 
 /**
- * Database dictionary
+ * Dictionary dictionary
  */
-public class Database{
+public class Dictionary{
     private ArrayList _dictionary = new ArrayList<String>();
     private String _filename = "dictionary/dictionary.txt";
     private boolean _modified;
@@ -14,7 +14,7 @@ public class Database{
     /**
      * Constructor
      */
-    public Database(){
+    public Dictionary(){
         readFromFile();
         _modified = false;
     }

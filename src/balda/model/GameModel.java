@@ -19,8 +19,8 @@ public class GameModel {
     private AbstractPlayer _activePlayer;
     private AbstractPlayer _otherPlayer;
     private GameMode _gameMode;
-    private Database _database = new Database();
-    private UsedDictionary _used = new UsedDictionary();
+    private Dictionary _database = new Dictionary();
+    private UsedWords _used = new UsedWords();
     
     /**
      * Constructor

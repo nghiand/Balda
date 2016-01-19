@@ -20,11 +20,11 @@ public class ComputerPlayer extends AbstractPlayer{
      * Constructor
      * @param mode Ai mode
      * @param field Game field
-     * @param database Database dictionary
+     * @param database Dictionary dictionary
      * @param used Common dictionary, in which used words
      */
     public ComputerPlayer(AiMode mode, GameField field, 
-            Database database, UsedDictionary used){
+            Dictionary database, UsedWords used){
         super("Computer", field, database, used);
         _difficulty = mode.difficulty();
     }

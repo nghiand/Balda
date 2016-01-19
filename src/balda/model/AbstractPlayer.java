@@ -17,18 +17,18 @@ public abstract class AbstractPlayer {
     protected Word _currentWord = new Word();
     protected Cell _currentCell;
     protected String _name;
-    protected Database _database;
-    protected UsedDictionary _used;
+    protected Dictionary _database;
+    protected UsedWords _used;
     
     /**
      * Constructor
      * @param name Player's name
      * @param field Gamefield
-     * @param database Database dictionary
+     * @param database Dictionary dictionary
      * @param used Common dictionary, which stores used words
      */
     public AbstractPlayer(String name, GameField field, 
-            Database database, UsedDictionary used){
+            Dictionary database, UsedWords used){
         _name = name;
         _field = field;
         _database = database;
