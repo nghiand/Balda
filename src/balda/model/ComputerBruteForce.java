@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import javax.swing.Timer;
 
 /**
- * Class for description computer player
+ * Class for description computer player with brute force algorithm
  */
 public class ComputerBruteForce extends ComputerPlayer{
     
