@@ -57,7 +57,7 @@ public class ComputerPlayer extends AbstractPlayer{
             Timer addingLetter = new Timer(timer += delay, null);
             addingLetter.addActionListener(new ActionListener(){
                 public void actionPerformed(ActionEvent e){
-                    addLetter(chosenCell.position());
+                    chooseCell(chosenCell.position());
                     addingLetter.stop();
                 }
             });
