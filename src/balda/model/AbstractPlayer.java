@@ -166,6 +166,7 @@ public abstract class AbstractPlayer {
      * Skip turn
      */
     public void skipTurn(){
+        _addingLetter = true;
         fireSkipedTurn();
     }
     
@@ -179,6 +180,14 @@ public abstract class AbstractPlayer {
         } else{
             this.appendLetter(pos);
         }        
+    }
+    
+    /**
+     * Player added word to database dictionary
+     */
+    public void addWordToDictionary(){
+        String word = this.currentWord().word();
+        _database.addWord(word);
     }
     
     /**

@@ -6,13 +6,15 @@
 package balda.model;
 
 /**
- *
- * @author Ngo Nghia
+ * Class, which is representation for Ai easy mode
  */
 public class AiEasyMode extends AiMode{
     public static final String _name = "Easy";
     private static final int _difficulty = 3;
     
+    /**
+     * Constructor
+     */
     public AiEasyMode(){
         super(_name, _difficulty);
     }

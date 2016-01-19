@@ -27,6 +27,21 @@ public class GameField {
     }
     
     /**
+     * Generate field
+     * @param width Width
+     * @param height Height
+     */
+    void generateField(int width, int height){
+        clear();
+        setSize(width, height);
+        for (int row = 1; row <= height; row++){
+            for (int col = 1; col <= width; col++){
+                setCell(new Point(row, col), new Cell());
+            }
+        }        
+    }
+    
+    /**
      * Set size for game field
      * @param width Width
      * @param height Height
@@ -111,7 +126,7 @@ public class GameField {
     
     /**
      * Check if all cells were filled
-     * @return 
+     * @return true if game field is full
      */
     public boolean isFull(){
         int ret = 0;

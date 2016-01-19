@@ -3,11 +3,15 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/C:/Users/Ngo%20Nghia/Documents/Balda/src/balda/model/AiNormalMode.java</file>
             <file>file:/C:/Users/Ngo%20Nghia/Documents/Balda/src/balda/model/events/PlayerActionListener.java</file>
-            <file>file:/C:/Users/Ngo%20Nghia/Documents/Balda/src/balda/model/events/PlayerActionEvent.java</file>
             <file>file:/C:/Users/Ngo%20Nghia/Documents/Balda/src/balda/model/Database.java</file>
             <file>file:/C:/Users/Ngo%20Nghia/Documents/Balda/src/balda/model/ComputerPlayer.java</file>
+            <file>file:/C:/Users/Ngo%20Nghia/Documents/Balda/src/balda/model/AiMode.java</file>
+            <file>file:/C:/Users/Ngo%20Nghia/Documents/Balda/src/balda/model/AiHardMode.java</file>
             <file>file:/C:/Users/Ngo%20Nghia/Documents/Balda/src/balda/view/GamePanel.java</file>
+            <file>file:/C:/Users/Ngo%20Nghia/Documents/Balda/src/balda/model/GameField.java</file>
+            <file>file:/C:/Users/Ngo%20Nghia/Documents/Balda/src/balda/model/Player.java</file>
             <file>file:/C:/Users/Ngo%20Nghia/Documents/Balda/src/balda/model/GameModel.java</file>
             <file>file:/C:/Users/Ngo%20Nghia/Documents/Balda/src/balda/model/AbstractPlayer.java</file>
         </group>

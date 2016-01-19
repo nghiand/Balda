@@ -29,7 +29,7 @@ public class GameModel {
      * @param gameMode game mode
      */
     public GameModel(int width, int height, GameMode gameMode){
-        generateField(width, height);
+        field().generateField(width, height);
         _gameMode = gameMode;
         
         _otherPlayer = new Player("Player 1", _field, _database, _used);
@@ -55,7 +55,7 @@ public class GameModel {
     
     /**
      * Get game field
-     * @return 
+     * @return game field
      */
     public GameField field(){
         return _field;
@@ -110,22 +110,7 @@ public class GameModel {
             //exchangePlayer();
         }        
     }
-    
-    /**
-     * Generate game field
-     * @param width width of game field
-     * @param height height of game field
-     */
-    private void generateField(int width, int height){
-        field().clear();
-        field().setSize(width, height);
-        for (int row = 1; row <= field().height(); row++){
-            for (int col = 1; col <= field().width(); col++){
-                field().setCell(new Point(row, col), new Cell());
-            }
-        }
-    }
-    
+        
     /**
      * Get active player
      * @return active player
@@ -159,15 +144,7 @@ public class GameModel {
         }
         return null;
     }
-    
-    /**
-     * Player added word to database dictionary
-     */
-    public void addWordToDictionary(){
-        String word = _activePlayer.currentWord().word();
-        _database.addWord(word);
-    }
-    
+        
     //----------------------------------------------------------
     
     private class PlayerObserve implements PlayerActionListener{

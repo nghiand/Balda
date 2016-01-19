@@ -69,7 +69,6 @@ public class GamePanel extends JFrame{
         fieldPanel.setMinimumSize(fieldDimension);
         fieldPanel.setMaximumSize(fieldDimension);
         mainBox.add(fieldPanel);
-        
                         
         setContentPane(mainBox);
         pack();
@@ -174,7 +173,7 @@ public class GamePanel extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e){
                 if (!(_model.activePlayer() instanceof ComputerPlayer))
-                    _model.addWordToDictionary();
+                    _model.activePlayer().addWordToDictionary();
             }
         });
         
@@ -193,7 +192,8 @@ public class GamePanel extends JFrame{
             public void actionPerformed(ActionEvent e){
                 if (!(_model.activePlayer() instanceof ComputerPlayer)){
                     _model.activePlayer().currentWord().clear();
-                    resetCellColor();
+                    if (!_model.activePlayer().isAddingLetter())
+                        resetCellColor();
                 }
             }
         });
@@ -212,7 +212,7 @@ public class GamePanel extends JFrame{
     // create menu
     private void createMenu(){
         _menu  = new JMenuBar();
-        JMenu fileMenu = new JMenu("File");
+        JMenu fileMenu = new JMenu("Menu");
         
         for (int i = 0; i < fileItems.length; i++){
             JMenuItem item = new JMenuItem(fileItems[i]);
@@ -488,7 +488,7 @@ public class GamePanel extends JFrame{
         
         @Override
         public void skipedTurn(PlayerActionEvent e){
-            
+            _keyboard.setEnabled(false);            
         }
     }
     

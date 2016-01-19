@@ -6,8 +6,7 @@
 package balda.model;
 
 /**
- *
- * @author Ngo Nghia
+ * Class, which is representation for Ai Hard mode
  */
 public class AiHardMode extends AiMode {
     public static final String _name = "Hard";

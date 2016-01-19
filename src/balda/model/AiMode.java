@@ -6,13 +6,17 @@
 package balda.model;
 
 /**
- *
- * @author Ngo Nghia
+ * Abstract class for representation modes of artificial intelligence
  */
 public abstract class AiMode {
     protected int _difficulty;
     public static String _name;
     
+    /**
+     * Constructor
+     * @param name name of Ai mode
+     * @param difficulty difficulty of Ai mode
+     */
     public AiMode(String name, int difficulty){
         _name = name;
         _difficulty = difficulty;

@@ -6,8 +6,7 @@
 package balda.model;
 
 /**
- *
- * @author Ngo Nghia
+ * Class, which is representation for Ai Normal mode
  */
 public class AiNormalMode extends AiMode {
     public static final String _name = "Normal";

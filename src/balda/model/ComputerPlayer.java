@@ -18,7 +18,7 @@ public class ComputerPlayer extends AbstractPlayer{
     
     /**
      * Constructor
-     * @param difficulty Difficulty of AI
+     * @param mode Ai mode
      * @param field Game field
      * @param database Database dictionary
      * @param used Common dictionary, in which used words
