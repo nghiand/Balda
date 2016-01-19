@@ -12,7 +12,6 @@ import java.util.logging.Logger;
  */
 public abstract class AbstractPlayer {
     private int _score = 0;
-    protected UsedDictionary _dictionary = new UsedDictionary();
     protected boolean _addingLetter = true;
     protected GameField _field;
     protected Word _currentWord = new Word();
