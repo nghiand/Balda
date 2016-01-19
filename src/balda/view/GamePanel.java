@@ -4,6 +4,7 @@ import balda.model.AbstractPlayer;
 import balda.model.Cell;
 import balda.model.ComputerBruteForce;
 import balda.model.ComputerPlayer;
+import balda.model.ComputerRandomCell;
 import balda.model.GameMode;
 import balda.model.GameModel;
 import balda.model.events.GameEvent;
@@ -261,6 +262,7 @@ public class GamePanel extends JFrame{
         
         // ai mode
         ArrayList<String> aiModeName = new ArrayList<String>();
+        aiModeName.add(ComputerRandomCell.name);
         aiModeName.add(ComputerBruteForce.name);
         
         String aiModeString[] = aiModeName.toArray(new String[aiModeName.size()]);
