@@ -79,7 +79,7 @@ public class ComputerPlayer extends AbstractPlayer{
                 Timer appenddingLetter = new Timer(timer += delay, null);
                 appenddingLetter.addActionListener(new ActionListener(){
                     public void actionPerformed(ActionEvent e){
-                        appendLetter(pos);
+                        appendLetterToWord(pos);
                         appenddingLetter.stop();
                     }
                 });

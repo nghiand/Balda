@@ -116,7 +116,7 @@ public abstract class AbstractPlayer {
      * Append letter, which is in position pos, to chosen word
      * @param pos position
      */
-    public void appendLetter(Point pos){
+    public void appendLetterToWord(Point pos){
         if (!_addingLetter){
             Cell currentCell = _field.cell(pos);
             if (currentCell.isAvailable()) return;
@@ -177,7 +177,7 @@ public abstract class AbstractPlayer {
         if (this.isAddingLetter()){
             this.chooseCell(pos);
         } else{
-            this.appendLetter(pos);
+            this.appendLetterToWord(pos);
         }        
     }
     
