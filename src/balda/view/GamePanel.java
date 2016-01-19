@@ -1,10 +1,8 @@
 package balda.view;
 
 import balda.model.AbstractPlayer;
-import balda.model.AiEasyMode;
-import balda.model.AiHardMode;
-import balda.model.AiNormalMode;
 import balda.model.Cell;
+import balda.model.ComputerBruteForce;
 import balda.model.ComputerPlayer;
 import balda.model.GameMode;
 import balda.model.GameModel;
@@ -145,7 +143,7 @@ public class GamePanel extends JFrame{
         scores[0].setText("0");
         firstPlayerScore.add(scores[0]);
         JPanel secondPlayerScore = new JPanel();
-        if (_gameMode == GameMode.TWO_PLAYERS)
+        if (_gameMode.isTwoPlayers())
             secondPlayerScore.add(new JLabel("Player 2: "));
         else
             secondPlayerScore.add(new JLabel("Computer: "));
@@ -263,9 +261,7 @@ public class GamePanel extends JFrame{
         
         // ai mode
         ArrayList<String> aiModeName = new ArrayList<String>();
-        aiModeName.add(AiEasyMode._name);
-        aiModeName.add(AiNormalMode._name);
-        aiModeName.add(AiHardMode._name);
+        aiModeName.add(ComputerBruteForce.name);
         
         String aiModeString[] = aiModeName.toArray(new String[aiModeName.size()]);
         //String aiModeString[] = {"Easy", "Normal", "Hard"};
@@ -315,15 +311,10 @@ public class GamePanel extends JFrame{
         _width = (int) widthBox.getValue();
         _height = (int) heightBox.getValue();
         if (twoPlayersMode.isSelected()){
-            _gameMode = GameMode.TWO_PLAYERS;
+            _gameMode = new GameMode();
         } else{
-            int index = aiModeList.getSelectedIndex();
-            if (index == 0)
-                _gameMode = GameMode.EASY;
-            else if (index == 1)
-                _gameMode = GameMode.NORMAL;
-            else
-                _gameMode = GameMode.HARD;
+            String computerName = (String) aiModeList.getSelectedItem();
+            _gameMode = new GameMode(computerName);
         }
     }
     

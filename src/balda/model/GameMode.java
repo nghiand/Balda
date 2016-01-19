@@ -9,20 +9,20 @@ public class GameMode {
     private Mode _mode;
     private String _computerName;
     
-    GameMode(){
+    public GameMode(){
         _mode = Mode.TWO_PLAYERS;
     }
     
-    GameMode(String computerName){
+    public GameMode(String computerName){
         _mode = Mode.VS_COMPUTER;
         _computerName = computerName;
     }
     
-    boolean isTwoPlayers(){
+    public boolean isTwoPlayers(){
         return _mode == Mode.TWO_PLAYERS;
     }
     
-    String computerName(){
+    public String computerName(){
         return _computerName;
     }
 }
