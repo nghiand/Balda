@@ -132,7 +132,7 @@ public abstract class AbstractPlayer {
      * Choose cell in position pos
      * @param pos position
      */
-    public void addLetter(Point pos){
+    public void chooseCell(Point pos){
         if (_addingLetter && _field.isAvailable(pos)){
             _currentCell = _field.cell(pos);
             fireFreeCellIsChoosen(_currentCell);            
@@ -173,9 +173,9 @@ public abstract class AbstractPlayer {
      * Player click on a cell
      * @param pos position of cell
      */    
-    public void clickOnCell(Point pos){
+    public void cellIsActivated(Point pos){
         if (this.isAddingLetter()){
-            this.addLetter(pos);
+            this.chooseCell(pos);
         } else{
             this.appendLetter(pos);
         }        
